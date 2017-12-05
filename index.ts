@@ -9,4 +9,4 @@
 /**
  * Entry point for all public APIs of the package.
  */
-export * from './src/ng2-signalr';
+export * from './src/ng4-signalr';

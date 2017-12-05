@@ -46,13 +46,13 @@ echo(chalk.green('Bundling completed'));
 /* Minimizes umd bundle */
 echo('Start minification');
 
-exec('uglifyjs ./dist/bundles/ng2-signalr.umd.js -o ./dist/bundles/ng2-signalr.umd.min.js');
+exec('uglifyjs ./dist/bundles/ng4-signalr.umd.js -o ./dist/bundles/ng4-signalr.umd.min.js');
 
 echo(chalk.green('Minification completed'));
 
 
 /* Copies files */
-cp('-Rf', ['package.json', 'LICENSE', 'README.md'], 'dist');
+cp('-Rf', ['package.json', 'LICENSE'], 'dist');
 
 
 echo('End building');

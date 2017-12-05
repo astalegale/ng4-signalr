@@ -1,8 +1,8 @@
 {
-  "name": "ng2-signalr",
-  "version": "2.1.1",
-  "description": "angular2 signalr library",
-  "main": "bundles/ng2-signalr.umd.js",
+  "name": "ng4-signalr",
+  "version": "1.0.0",
+  "description": "angular4 signalr library",
+  "main": "bundles/ng4-signalr.umd.js",
   "module": "index.js",
   "scripts": {
     "build": "node build.js",
@@ -18,16 +18,16 @@
   "author": "Hannes Neukermans",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HNeukermans/ng2-signalR.git"
+    "url": "git+https://github.com/astalegale/ng4-signalr.git"
   },
   "bugs": {
-    "url": "https://github.com/robisim74/ng2-signalr/issues"
+    "url": "https://github.com/astalegale/ng4-signalr/issues"
   },
-  "homepage": "https://github.com/HNeukermans/ng2-signalR",
+  "homepage": "https://github.com/astalegale/ng4-signalr",
   "keywords": [
     "signalR",
     "typescript",
-    "angular 2"
+    "angular 4"
   ],
   "license": "MIT",
   "peerDependencies": {
