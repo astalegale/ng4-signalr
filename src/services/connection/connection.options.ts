@@ -9,7 +9,7 @@ export interface IConnectionOptions {
     qs?: any;
 
     /** name of the SignalR service hub to connect to. */
-    hubName?: string;
+    hubNames?: string[];
 
     /** Allows jsonp */
     jsonp?: boolean;

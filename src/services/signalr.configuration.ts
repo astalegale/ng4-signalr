@@ -11,7 +11,7 @@ export class SignalRConfiguration {
     public qs?: any;
 
     /** name of the SignalR service hub to connect to */
-    public hubName: string;
+    public hubNames: string[];
 
     /** disable/enables client side logging. Defaults to false */
     public logging: boolean;
@@ -19,20 +19,20 @@ export class SignalRConfiguration {
     /** Allows jsonp. This flag can be used to suppport CORS on older browsers */
     public jsonp: boolean;
 
-     /** Allows withCredentials. This flag can be used to suppport CORS */
+    /** Allows withCredentials. This flag can be used to suppport CORS */
     public withCredentials: boolean;
 
     /** Allows you to specify transport. You can specify a fallback order if you wan't to try specific transports in order. By default selects best avaliable transport. */
     public transport: ConnectionTransport | ConnectionTransport[];
 
     constructor() {
-       this.hubName = null;
-       this.logging = false;
-       this.qs  = null;
-       this.url = null;
-       this.jsonp = false;
-       this.withCredentials = false;
-       this.transport = ConnectionTransports.auto;
+        this.hubNames = [];
+        this.logging = false;
+        this.qs = null;
+        this.url = null;
+        this.jsonp = false;
+        this.withCredentials = false;
+        this.transport = ConnectionTransports.auto;
     }
 }
 

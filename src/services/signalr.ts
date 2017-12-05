@@ -36,9 +36,11 @@ export class SignalR {
             let serializedTransport = JSON.stringify(configuration.transport);
 
             if (configuration.logging) {
-                console.log(`Creating connecting with...`);
+                console.log(`Creating connecting with multiple HUBS support!...`);
                 console.log(`configuration:[url: '${configuration.url}'] ...`);
-                console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
+                configuration.hubNames.forEach(element => {
+                    console.log(`configuration:[hubName: '${element}'] ...`);
+                });
                 console.log(`configuration:[qs: '${serializedQs}'] ...`);
                 console.log(`configuration:[transport: '${serializedTransport}'] ...`);
             }
@@ -49,12 +51,19 @@ export class SignalR {
         jConnection.logging = configuration.logging;
         jConnection.qs = configuration.qs;
 
-        // create a proxy
-        let jProxy = jConnection.createHubProxy(configuration.hubName);
-        // !!! important. We need to register at least one function otherwise server callbacks will not work.
-        jProxy.on('noOp', function () { });
+        let jProxies: Map<string, any> = new Map<string, any>();
+        configuration.hubNames.forEach(element => {
+            // create a proxy        
+            let jp = jConnection.createHubProxy(element);
+            jp.on('noOp', function () { });
+            jProxies.set(element, jp);
+            // !!! important. We need to register at least one function otherwise server callbacks will not work.
+        });
 
-        let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone, configuration);
+
+
+
+        let hubConnection = new SignalRConnection(jConnection, jProxies, this._zone, configuration);
 
         return hubConnection;
     }
@@ -67,7 +76,7 @@ export class SignalR {
 
     private merge(overrides: IConnectionOptions): SignalRConfiguration {
         let merged: SignalRConfiguration = new SignalRConfiguration();
-        merged.hubName = overrides.hubName || this._configuration.hubName;
+        merged.hubNames = overrides.hubNames || this._configuration.hubNames;
         merged.url = overrides.url || this._configuration.url;
         merged.qs = overrides.qs || this._configuration.qs;
         merged.logging = this._configuration.logging;

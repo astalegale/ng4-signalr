@@ -11,12 +11,14 @@ export class SignalRConnection implements ISignalRConnection {
     private _status: Observable<ConnectionStatus>;
     private _errors: Observable<any>;
     private _jConnection: any;
-    private _jProxy: any;
+    private _defaultProxy: any;
+    private _jProxies: Map<string, any>;
     private _zone: NgZone;
     private _configuration: SignalRConfiguration;
 
-    constructor(jConnection: any, jProxy: any, zone: NgZone, configuration: SignalRConfiguration) {
-        this._jProxy = jProxy;
+    constructor(jConnection: any, jProxies: Map<string, any>, zone: NgZone, configuration: SignalRConfiguration) {
+        this._jProxies = jProxies;
+        this._defaultProxy = jProxies.values().next().value;
         this._jConnection = jConnection;
         this._zone = zone;
         this._errors = this.wireUpErrorsAsObservable();
@@ -37,22 +39,22 @@ export class SignalRConnection implements ISignalRConnection {
         let jTransports = this.convertTransports(this._configuration.transport);
 
         let $promise = new Promise<ISignalRConnection>((resolve, reject) => {
-                this._jConnection
+            this._jConnection
                 .start({
-                        jsonp: this._configuration.jsonp,
-                        transport: jTransports,
-                        withCredentials: this._configuration.withCredentials,
-                    })
+                    jsonp: this._configuration.jsonp,
+                    transport: jTransports,
+                    withCredentials: this._configuration.withCredentials,
+                })
                 .done(() => {
-                        console.log('Connection established, ID: ' + this._jConnection.id);
-                        console.log('Connection established, Transport: ' + this._jConnection.transport.name);
-                        resolve(this);
-                    })
+                    console.log('Connection established, ID: ' + this._jConnection.id);
+                    console.log('Connection established, Transport: ' + this._jConnection.transport.name);
+                    resolve(this);
+                })
                 .fail((error: any) => {
-                        console.log('Could not connect');
-                        reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
-                    });
-            });
+                    console.log('Could not connect');
+                    reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
+                });
+        });
         return $promise;
     }
 
@@ -64,14 +66,16 @@ export class SignalRConnection implements ISignalRConnection {
         return this._jConnection.id;
     }
 
-    public invoke(method: string, ...parameters: any[]): Promise<any> {
+
+
+    public invoke(method: string, sproxy?: string, ...parameters: any[]): Promise<any> {
         if (method == null) {
             throw new Error('SignalRConnection: Failed to invoke. Argument \'method\' can not be null');
         }
         this.log(`SignalRConnection. Start invoking \'${method}\'...`);
 
         let $promise = new Promise<any>((resolve, reject) => {
-            this._jProxy.invoke(method, ...parameters)
+            this.getCurrentProxy(sproxy).invoke(method, ...parameters)
                 .done((result: any) => {
                     this.log(`\'${method}\' invoked succesfully. Resolving promise...`);
                     resolve(result);
@@ -86,22 +90,22 @@ export class SignalRConnection implements ISignalRConnection {
         return $promise;
     }
 
-    public listen<T>(listener: BroadcastEventListener<T>): void {
+    public listen<T>(listener: BroadcastEventListener<T>, sproxy?: string): void {
         if (listener == null) {
             throw new Error('Failed to listen. Argument \'listener\' can not be null');
         }
 
         this.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
-        this._jProxy.on(listener.event, (...args: any[]) => {
+        this.getCurrentProxy(sproxy).on(listener.event, (...args: any[]) => {
 
             this._zone.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
-                    casted = <T>args[0];
-                };
-                this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
-                listener.next(casted);
-                this.log('listener next() called.');
+                    casted = <T> args[0];
+                    this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
+                    listener.next(casted);
+                    this.log('listener next() called.');
+                }
             });
         });
     }
@@ -118,6 +122,14 @@ export class SignalRConnection implements ISignalRConnection {
         return listener;
     }
 
+    private getCurrentProxy(sproxy?: string) {
+        if (!sproxy) {
+            return this._defaultProxy;
+        } else {
+            return this._jProxies.get(sproxy);
+        }
+    }
+
     private convertTransports(transports: ConnectionTransport | ConnectionTransport[]): any {
         if (transports instanceof Array) {
             return transports.map((t: ConnectionTransport) => t.name);
@@ -130,9 +142,9 @@ export class SignalRConnection implements ISignalRConnection {
         let sError = new Subject<any>();
 
         this._jConnection.error((error: any) => {
-            //this._zone.run(() => {  /*errors don't need to run in a  zone*/
+            // this._zone.run(() => {  /*errors don't need to run in a  zone*/
             sError.next(error);
-            //});
+            // });
         });
         return sError;
     }
@@ -154,7 +166,7 @@ export class SignalRConnection implements ISignalRConnection {
 
         let casted: T = null;
         if (args.length > 0) {
-            casted = <T>args[0];
+            casted = <T> args[0];
         }
 
         this._zone.run(() => {
