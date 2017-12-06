@@ -11,5 +11,7 @@ export interface ISignalRConnection {
     listen<T>(listener: BroadcastEventListener<T>): void;
     listenFor<T>(listener: string): BroadcastEventListener<T>;
     stop(): void;
+    setQs(qs: any): void;
+    getQs(): string;
     start(): Promise<any>;
 }

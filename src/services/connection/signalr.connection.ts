@@ -8,6 +8,7 @@ import { SignalRConfiguration } from '../signalr.configuration';
 import { ConnectionTransport } from './connection.transport';
 
 export class SignalRConnection implements ISignalRConnection {
+
     private _status: Observable<ConnectionStatus>;
     private _errors: Observable<any>;
     private _jConnection: any;
@@ -15,6 +16,7 @@ export class SignalRConnection implements ISignalRConnection {
     private _jProxies: Map<string, any>;
     private _zone: NgZone;
     private _configuration: SignalRConfiguration;
+
 
     constructor(jConnection: any, jProxies: Map<string, any>, zone: NgZone, configuration: SignalRConfiguration) {
         this._jProxies = jProxies;
@@ -34,7 +36,16 @@ export class SignalRConnection implements ISignalRConnection {
         return this._status;
     }
 
+    public setQs(qs: any) {
+        this._jConnection.qs = qs;
+    }
+    public getQs(): string {
+        return this._jConnection.qs;
+    }
+
     public start(): Promise<ISignalRConnection> {
+
+        console.log('Starting connection', this._jConnection);
 
         let jTransports = this.convertTransports(this._configuration.transport);
 
@@ -59,6 +70,7 @@ export class SignalRConnection implements ISignalRConnection {
     }
 
     public stop(): void {
+        console.log('Stopping connection', this._jConnection);
         this._jConnection.stop();
     }
 

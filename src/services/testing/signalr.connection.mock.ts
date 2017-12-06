@@ -12,6 +12,12 @@ export interface IListenerCollection {
 }
 
 export class SignalRConnectionMock implements ISignalRConnection {
+    getQs(): string {
+        return null;
+    }
+    setQs(qs: string): void {
+
+    }
     constructor(
         private _mockErrors$: Subject<any>,
         private _mockStatus$: Subject<ConnectionStatus>,
@@ -33,7 +39,7 @@ export class SignalRConnectionMock implements ISignalRConnection {
     public stop(): void {
     }
 
-   public start(): Promise<any> {
+    public start(): Promise<any> {
         return Promise.resolve(null); // TODO: implement
     }
 
