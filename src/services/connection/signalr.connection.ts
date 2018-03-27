@@ -122,14 +122,14 @@ export class SignalRConnection implements ISignalRConnection {
         });
     }
 
-    public listenFor<T>(event: string): BroadcastEventListener<T> {
+    public listenFor<T>(event: string, sproxy?: string): BroadcastEventListener<T> {
         if (event == null || event === '') {
             throw new Error('Failed to listen. Argument \'event\' can not be empty');
         }
 
         let listener = new BroadcastEventListener<T>(event);
 
-        this.listen(listener);
+        this.listen(listener,sproxy);
 
         return listener;
     }
