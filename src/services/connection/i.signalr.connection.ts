@@ -8,8 +8,8 @@ export interface ISignalRConnection {
     readonly errors: Observable<any>;
     readonly id: string;
     invoke(method: string, ...parameters: any[]): Promise<any>;
-    listen<T>(listener: BroadcastEventListener<T>): void;
-    listenFor<T>(listener: string): BroadcastEventListener<T>;
+    listen<T>(listener: BroadcastEventListener<T>, sproxy?: string): void;
+    listenFor<T>(listener: string, sproxy?: string): BroadcastEventListener<T>;
     stop(): void;
     setQs(qs: any): void;
     getQs(): string;
