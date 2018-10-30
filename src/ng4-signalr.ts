@@ -1,6 +1,4 @@
 export { ISignalRConnection } from './services/connection/i.signalr.connection';
-export { SignalRConnectionMock } from './services/testing/signalr.connection.mock';
-export { SignalRConnectionMockManager } from './services/testing/signalr.connection.mock.manager';
 export { ConnectionStatus } from './services/connection/connection.status';
 export { ConnectionStatuses } from './services/connection/connection.statuses';
 export { BroadcastEventListener } from './services/eventing/broadcast.event.listener';
