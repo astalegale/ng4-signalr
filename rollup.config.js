@@ -9,15 +9,15 @@ export default {
         '@angular/core',
         '@angular/common',
         '@angular/router',
-        'rxjs/Observable',
-        'rxjs/Observer'
+        'rxjs'
     ],
     globals: {
         '@angular/core': 'ng.core',
         '@angular/common': 'ng.common',
         '@angular/router': 'ng.router',
-        'rxjs/Observable': 'Rx',
-        'rxjs/Observer': 'Rx'
+        'rxjs': 'Rx'
     },
-    onwarn: () => { return }
+    onwarn: () => {
+        return
+    }
 }

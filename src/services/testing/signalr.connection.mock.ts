@@ -1,9 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { AsyncSubject } from 'rxjs/AsyncSubject';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { SignalRConfiguration } from '../signalr.configuration';
+import { Observable, Subject } from 'rxjs';
 import { BroadcastEventListener } from '../eventing/broadcast.event.listener';
-import { Subject } from 'rxjs/Subject';
 import { ConnectionStatus } from '../connection/connection.status';
 import { ISignalRConnection } from '../connection/i.signalr.connection';
 

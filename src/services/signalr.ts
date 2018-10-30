@@ -1,12 +1,11 @@
 import { ISignalRConnection } from './connection/i.signalr.connection';
 import { SignalRConfiguration } from './signalr.configuration';
 import { SignalRConnection } from './connection/signalr.connection';
-import { NgZone, Injectable, Inject } from '@angular/core';
 import { IConnectionOptions } from './connection/connection.options';
-import { ConnectionTransport } from './connection/connection.transport';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ConnectionStatus } from './connection/connection.status';
 import { SIGNALR_JCONNECTION_TOKEN } from "./signalr.module";
+import { NgZone, Inject, Injectable } from '@angular/core';
 
 declare var jQuery: any;
 
