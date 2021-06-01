@@ -6,8 +6,6 @@ import { IConnectionOptions } from './connection/connection.options';
 import { SIGNALR_JCONNECTION_TOKEN } from "./signalr.module";
 import { NgZone, Inject, Injectable } from '@angular/core';
 
-declare var jQuery: any;
-
 @Injectable()
 export class SignalR {
     private _configuration: SignalRConfiguration;

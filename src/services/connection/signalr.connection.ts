@@ -168,7 +168,7 @@ export class SignalRConnection implements ISignalRConnection {
         return sStatus.asObservable();
     }
 
-    private onBroadcastEventReceived<T>(listener: BroadcastEventListener<T>, ...args: any[]) {
+    /*private onBroadcastEventReceived<T>(listener: BroadcastEventListener<T>, ...args: any[]) {
         this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
 
         let casted: T = null;
@@ -181,7 +181,7 @@ export class SignalRConnection implements ISignalRConnection {
         });
 
         this.log('listener next() called.');
-    }
+    }*/
 
     private log(...args: any[]) {
         if (this._jConnection.logging === false) {
