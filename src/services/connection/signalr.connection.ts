@@ -16,7 +16,6 @@ export class SignalRConnection implements ISignalRConnection {
     private _zone: NgZone;
     private _configuration: SignalRConfiguration;
 
-
     constructor(jConnection: any, jProxies: Map<string, any>, zone: NgZone, configuration: SignalRConfiguration) {
         this._jProxies = jProxies;
         this._defaultProxy = jProxies.values().next().value;
@@ -46,9 +45,9 @@ export class SignalRConnection implements ISignalRConnection {
 
         console.log('Starting connection', this._jConnection);
 
-        let jTransports = this.convertTransports(this._configuration.transport);
+        const jTransports = this.convertTransports(this._configuration.transport);
 
-        let $promise = new Promise<ISignalRConnection>((resolve, reject) => {
+        const $promise = new Promise<ISignalRConnection>((resolve, reject) => {
             this._jConnection
                 .start({
                     jsonp: this._configuration.jsonp,
@@ -77,15 +76,13 @@ export class SignalRConnection implements ISignalRConnection {
         return this._jConnection.id;
     }
 
-
-
     public invoke(method: string, sproxy?: string, ...parameters: any[]): Promise<any> {
         if (method == null) {
             throw new Error('SignalRConnection: Failed to invoke. Argument \'method\' can not be null');
         }
         this.log(`SignalRConnection. Start invoking \'${method}\'...`);
 
-        let $promise = new Promise<any>((resolve, reject) => {
+        const $promise = new Promise<any>((resolve, reject) => {
             this.getCurrentProxy(sproxy).invoke(method, ...parameters)
                 .done((result: any) => {
                     this.log(`\'${method}\' invoked succesfully. Resolving promise...`);
@@ -112,7 +109,7 @@ export class SignalRConnection implements ISignalRConnection {
             this._zone.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
-                    casted = <T>args[0];
+                    casted = args[0] as T;
                     this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
                     listener.next(casted);
                     this.log('listener next() called.');
@@ -126,7 +123,7 @@ export class SignalRConnection implements ISignalRConnection {
             throw new Error('Failed to listen. Argument \'event\' can not be empty');
         }
 
-        let listener = new BroadcastEventListener<T>(event);
+        const listener = new BroadcastEventListener<T>(event);
 
         this.listen(listener, sproxy);
 
@@ -148,9 +145,8 @@ export class SignalRConnection implements ISignalRConnection {
         return transports.name;
     }
 
-
     private wireUpErrorsAsObservable(): Observable<any> {
-        let sError = new Subject<any>();
+        const sError = new Subject<any>();
 
         this._jConnection.error((error: any) => {
             // this._zone.run(() => {  /*errors don't need to run in a  zone*/
@@ -161,7 +157,7 @@ export class SignalRConnection implements ISignalRConnection {
     }
 
     private wireUpStatusEventsAsObservable(): Observable<ConnectionStatus> {
-        let sStatus = new Subject<ConnectionStatus>();
+        const sStatus = new Subject<ConnectionStatus>();
         // aggregate all signalr connection status handlers into 1 observable.
         // handler wire up, for signalr connection status callback.
         this._jConnection.stateChanged((change: any) => {
@@ -177,7 +173,7 @@ export class SignalRConnection implements ISignalRConnection {
 
         let casted: T = null;
         if (args.length > 0) {
-            casted = <T>args[0];
+            casted = (args[0] as T);
         }
 
         this._zone.run(() => {

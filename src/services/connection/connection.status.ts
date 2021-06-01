@@ -2,16 +2,15 @@ export class ConnectionStatus {
 
     private static names: string[] = ['connecting', 'connected', 'reconnecting', '', 'disconnected'];
 
-    private _value: Number;
+    private _value: number;
 
-    get value(): Number {
+    get value(): number {
         return this._value;
     }
 
-     get name(): string {
-        return ConnectionStatus.names[Number.parseInt(this._value.toString())];
+    get name(): string {
+        return ConnectionStatus.names[Number.parseInt(this._value.toString(), 10)];
     }
-
 
     constructor(value: number) {
         if (value == null || value < 0) {

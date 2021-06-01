@@ -7,23 +7,25 @@ export const SIGNALR_JCONNECTION_TOKEN = new InjectionToken<any>('SIGNALR_JCONNE
 
 export function createSignalr(configuration: SignalRConfiguration, zone: NgZone) {
 
-    let jConnectionFn = getJConnectionFn();
+    const jConnectionFn = getJConnectionFn();
 
     return new SignalR(configuration, zone, jConnectionFn);
 }
 
 export function getJConnectionFn(): any {
-    let jQuery = getJquery();
-    let hubConnectionFn = (<any>window).jQuery.hubConnection;
+    const jQuery = getJquery();
+    const hubConnectionFn = jQuery.hubConnection;
     if (hubConnectionFn == null) {
+        // tslint:disable-next-line:max-line-length
         throw new Error('Signalr failed to initialize. Script \'jquery.signalR.js\' is missing. Please make sure to include \'jquery.signalR.js\' script.');
     }
     return hubConnectionFn;
 }
 
 function getJquery(): any {
-    let jQuery = (<any>window).jQuery;
+    const jQuery = (window as any).jQuery;
     if (jQuery == null) {
+        // tslint:disable-next-line:max-line-length
         throw new Error('Signalr failed to initialize. Script \'jquery.js\' is missing. Please make sure to include jquery script.');
     }
     return jQuery;
@@ -36,7 +38,7 @@ function getJquery(): any {
     }]
 })
 export class SignalRModule {
-    public static forRoot(getSignalRConfiguration: Function): ModuleWithProviders {
+    public static forRoot(getSignalRConfiguration: () => void): ModuleWithProviders {
         return {
             ngModule: SignalRModule,
             providers: [

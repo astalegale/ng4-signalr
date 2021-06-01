@@ -8,16 +8,18 @@ export interface IListenerCollection {
 }
 
 export class SignalRConnectionMock implements ISignalRConnection {
-    getQs(): string {
-        return null;
-    }
-    setQs(qs: string): void {
 
-    }
     constructor(
         private _mockErrors$: Subject<any>,
         private _mockStatus$: Subject<ConnectionStatus>,
         private _listeners: IListenerCollection) {
+    }
+
+    public getQs(): string {
+        return null;
+    }
+    public setQs(qs: string): void {
+        // empty
     }
 
     get errors(): Observable<any> {
@@ -33,6 +35,7 @@ export class SignalRConnectionMock implements ISignalRConnection {
     }
 
     public stop(): void {
+        // empty
     }
 
     public start(): Promise<any> {
@@ -48,10 +51,8 @@ export class SignalRConnectionMock implements ISignalRConnection {
     }
 
     public listenFor<T>(event: string): BroadcastEventListener<T> {
-        let listener = new BroadcastEventListener<T>(event);
+        const listener = new BroadcastEventListener<T>(event);
         this.listen(listener);
         return listener;
     }
 }
-
-

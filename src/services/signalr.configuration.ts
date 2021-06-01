@@ -22,7 +22,10 @@ export class SignalRConfiguration {
     /** Allows withCredentials. This flag can be used to suppport CORS */
     public withCredentials: boolean;
 
-    /** Allows you to specify transport. You can specify a fallback order if you wan't to try specific transports in order. By default selects best avaliable transport. */
+    /** Allows you to specify transport. You can specify a fallback order
+     * if you wan't to try specific transports in order.
+     * By default selects best avaliable transport.
+     */
     public transport: ConnectionTransport | ConnectionTransport[];
 
     constructor() {
@@ -35,4 +38,3 @@ export class SignalRConfiguration {
         this.transport = ConnectionTransports.auto;
     }
 }
-

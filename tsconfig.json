@@ -1,22 +1,23 @@
 {
+    "compileOnSave": false,
     "compilerOptions": {
-    "importHelpers": true,
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "outDir": "./dist/out-tsc",
         "sourceMap": true,
-        "inlineSources": true,
+        "declaration": true,
+        "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "noImplicitAny": true,
-        "skipLibCheck": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "target": "es2015",
+        "baseUrl": "./src",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
         "lib": [
-            "es2015",
+            "es2017",
             "dom"
         ],
-        "types": [
-            "jasmine",
-            "node"
-        ]
+        "module": "es2015"
     }
 }

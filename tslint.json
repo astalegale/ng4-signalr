@@ -22,15 +22,17 @@
             ],
             "kebab-case"
         ],
-        "use-input-property-decorator": true,
-        "use-output-property-decorator": true,
-        "use-host-property-decorator": true,
-        "no-attribute-parameter-decorator": true,
+        "no-console": false,
+        "no-inputs-metadata-property": true,
+        "no-outputs-metadata-property": true,
+        "no-host-metadata-property": true,
+        "no-attribute-decorator": true,
         "no-input-rename": true,
         "no-output-rename": true,
         "no-forward-ref": true,
-        "use-life-cycle-interface": true,
+        "use-lifecycle-interface": true,
         "use-pipe-transform-interface": true,
+        "function-constructor": true,
         "component-class-suffix": [
             true,
             "Component"
@@ -51,6 +53,10 @@
         ],
         "trailing-comma": [
             false
+        ],
+        "variable-name": [
+            true,
+            "allow-leading-underscore"
         ]
     }
 }

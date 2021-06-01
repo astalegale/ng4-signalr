@@ -2,8 +2,7 @@ import { ISignalRConnection } from './connection/i.signalr.connection';
 import { SignalRConfiguration } from './signalr.configuration';
 import { SignalRConnection } from './connection/signalr.connection';
 import { IConnectionOptions } from './connection/connection.options';
-import { Observable } from 'rxjs';
-import { ConnectionStatus } from './connection/connection.status';
+
 import { SIGNALR_JCONNECTION_TOKEN } from "./signalr.module";
 import { NgZone, Inject, Injectable } from '@angular/core';
 
@@ -18,7 +17,7 @@ export class SignalR {
     public constructor(
         configuration: SignalRConfiguration,
         zone: NgZone,
-        @Inject(SIGNALR_JCONNECTION_TOKEN) jHubConnectionFn: Function
+        @Inject(SIGNALR_JCONNECTION_TOKEN) jHubConnectionFn: any
     ) {
         this._configuration = configuration;
         this._zone = zone;
@@ -26,47 +25,43 @@ export class SignalR {
     }
 
     public createConnection(options?: IConnectionOptions): SignalRConnection {
-        let status: Observable<ConnectionStatus>;
-        let configuration = this.merge(options ? options : {});
+
+        const configuration = this.merge(options ? options : {});
 
         try {
 
-            let serializedQs = JSON.stringify(configuration.qs);
-            let serializedTransport = JSON.stringify(configuration.transport);
+            const serializedQs = JSON.stringify(configuration.qs);
+            const serializedTransport = JSON.stringify(configuration.transport);
 
             if (configuration.logging) {
                 console.log(`Creating connecting with multiple HUBS support!...`);
                 console.log(`configuration:[url: '${configuration.url}'] ...`);
-                configuration.hubNames.forEach(element => {
+                configuration.hubNames.forEach((element) => {
                     console.log(`configuration:[hubName: '${element}'] ...`);
                 });
                 console.log(`configuration:[qs: '${serializedQs}'] ...`);
                 console.log(`configuration:[transport: '${serializedTransport}'] ...`);
             }
-        } catch (err) { }
+        } catch (err) {/* empty */ }
 
         // create connection object
-        let jConnection = this._jHubConnectionFn(configuration.url);
+        const jConnection = this._jHubConnectionFn(configuration.url);
         jConnection.logging = configuration.logging;
         jConnection.qs = configuration.qs;
 
-        let jProxies: Map<string, any> = new Map<string, any>();
-        configuration.hubNames.forEach(element => {
-            // create a proxy        
-            let jp = jConnection.createHubProxy(element);
-            jp.on('noOp', function () { });
+        const jProxies: Map<string, any> = new Map<string, any>();
+        configuration.hubNames.forEach((element) => {
+            // create a proxy
+            const jp = jConnection.createHubProxy(element);
+            jp.on('noOp', () => { /* Empty */ });
             jProxies.set(element, jp);
             // !!! important. We need to register at least one function otherwise server callbacks will not work.
         });
 
-
-
-
-        let hubConnection = new SignalRConnection(jConnection, jProxies, this._zone, configuration);
+        const hubConnection = new SignalRConnection(jConnection, jProxies, this._zone, configuration);
 
         return hubConnection;
     }
-
 
     public connect(options?: IConnectionOptions): Promise<ISignalRConnection> {
 
@@ -74,7 +69,7 @@ export class SignalR {
     }
 
     private merge(overrides: IConnectionOptions): SignalRConfiguration {
-        let merged: SignalRConfiguration = new SignalRConfiguration();
+        const merged: SignalRConfiguration = new SignalRConfiguration();
         merged.hubNames = overrides.hubNames || this._configuration.hubNames;
         merged.url = overrides.url || this._configuration.url;
         merged.qs = overrides.qs || this._configuration.qs;
