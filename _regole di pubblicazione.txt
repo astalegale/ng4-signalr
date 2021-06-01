@@ -1,0 +1,8 @@
+regole per la pubblicazione del pacchetto
+
+eseguire:
+npm login (e loggarsi con account npmjs)
+npm run-script build 
+cd dist
+npm pack
+npm publish
