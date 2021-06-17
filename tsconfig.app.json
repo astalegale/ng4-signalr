@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "./",
+    "types": []
+  },
+  "angularCompilerOptions": {
+    "preserveWhitespaces": false,
+    "debug": true
+  },
+  "files": [
+    "index.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}

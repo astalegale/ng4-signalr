@@ -39,14 +39,14 @@
             }
         }
     },
-    "defaultProject": "migate",
+    "defaultProject": "ng4-signalr",
     "schematics": {
         "@schematics/angular:component": {
-            "prefix": "mgt",
+            "prefix": "ng4s",
             "styleext": "scss"
         },
         "@schematics/angular:directive": {
-            "prefix": "mgt"
+            "prefix": "ng4s"
         }
     }
 }
