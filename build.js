@@ -1,58 +1,58 @@
 "use strict";
 
 // ShellJS.
-require('shelljs/global');
+const shelljs = require('shelljs');
 
 // Colors.
 const chalk = require('chalk');
 
 
-echo('Start building...');
+shelljs.echo('Start building...');
 
 
 /* Cleans aot & dist folders */
-rm('-Rf', 'aot/*');
-rm('-Rf', 'dist/*');
+shelljs.rm('-Rf', 'aot/*');
+shelljs.rm('-Rf', 'dist/*');
 
 
 /* TSLint with Codelyzer */
 // https://github.com/palantir/tslint/blob/master/src/configs/recommended.ts
 // https://github.com/mgechev/codelyzer
-echo('Start TSLint');
+shelljs.echo('Start eslint');
 
-exec('tslint ./src/**/*.ts -e ./src/**/*.ngfactory.ts');
+shelljs.exec('npx eslint "./src/**/*.ts" --ignore-pattern "./src/**/*.ngfactory.ts"');
 
-echo(chalk.green('TSLint completed'));
+shelljs.echo(chalk.green('eslint completed'));
 
 
 /* Aot compilation */
-echo('Start AoT compilation');
-echo('ngc -p tsconfig-build.json');
+shelljs.echo('Start AoT compilation');
+shelljs.echo('ngc -p tsconfig-build.json');
 
-exec('ngc -p tsconfig-build.json');
+shelljs.exec('npx ngc -p tsconfig-build.json');
 
-echo(chalk.green('AoT compilation completed'));
+shelljs.echo(chalk.green('AoT compilation completed'));
 
 
 /* Creates umd bundle */
-echo('Start bundling');
-echo('rollup -c rollup.config.js');
+shelljs.echo('Start bundling');
+shelljs.echo('rollup -c rollup.config.js');
 
-exec('rollup -c rollup.config.js');
+shelljs.exec('npx rollup -c rollup.config.js');
 
-echo(chalk.green('Bundling completed'));
+shelljs.echo(chalk.green('Bundling completed'));
 
 
 /* Minimizes umd bundle */
-echo('Start minification');
+shelljs.echo('Start minification');
 
-exec('uglifyjs ./dist/bundles/ng4-signalr.umd.js -o ./dist/bundles/ng4-signalr.umd.min.js');
+shelljs.exec('npx uglifyjs ./dist/bundles/ng4-signalr.umd.js -o ./dist/bundles/ng4-signalr.umd.min.js');
 
-echo(chalk.green('Minification completed'));
+shelljs.echo(chalk.green('Minification completed'));
 
 
 /* Copies files */
-cp('-Rf', ['package.json', 'LICENSE'], 'dist');
+shelljs.cp('-Rf', ['package.json', 'LICENSE'], 'dist');
 
 
-echo('End building');
+shelljs.echo('End building');

@@ -11,9 +11,6 @@
         "noUnusedLocals": true,
         "target": "es2015",
         "baseUrl": "./src",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
         "lib": [
             "es2017",
             "dom"
