@@ -38,7 +38,7 @@ function getJquery(): any {
     }]
 })
 export class SignalRModule {
-    public static forRoot(getSignalRConfiguration: () => void): ModuleWithProviders {
+    public static forRoot(getSignalRConfiguration: () => void): ModuleWithProviders<SignalRModule> {
         return {
             ngModule: SignalRModule,
             providers: [
@@ -58,7 +58,7 @@ export class SignalRModule {
             ],
         };
     }
-    public static forChild(): ModuleWithProviders {
+    public static forChild(): ModuleWithProviders<SignalRModule> {
         throw new Error("forChild method not implemented");
     }
 }
