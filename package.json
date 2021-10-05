@@ -1,6 +1,6 @@
 {
   "name": "ng4-signalr",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "angular4 signalr library",
   "main": "bundles/ng4-signalr.umd.js",
   "module": "index.js",
