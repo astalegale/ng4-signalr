@@ -2,8 +2,9 @@ import { ISignalRConnection } from './connection/i.signalr.connection';
 import { SignalRConfiguration } from './signalr.configuration';
 import { SignalRConnection } from './connection/signalr.connection';
 import { IConnectionOptions } from './connection/connection.options';
-import { SIGNALR_JCONNECTION_TOKEN } from "./signalr.module";
-import { NgZone, Inject, Injectable } from '@angular/core';
+import { NgZone, Inject, Injectable, InjectionToken } from '@angular/core';
+
+export const SIGNALR_JCONNECTION_TOKEN = new InjectionToken<any>('SIGNALR_JCONNECTION_TOKEN');
 @Injectable()
 export class SignalR {
     private _configuration: SignalRConfiguration;

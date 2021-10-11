@@ -6,20 +6,13 @@
         "ng4-signalr": {
             "root": "",
             "sourceRoot": "src",
-            "projectType": "application",
+            "projectType": "library",
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-ng-packagr:build",
                     "options": {
-                        "outputPath": "dist",
-                        "index": "src/index.html",
-                        "main": "src/main.ts",
-                        "tsConfig": "src/tsconfig.app.json",
-                        "polyfills": "src/polyfills.ts",
-                        "scripts": [
-                            "node_modules/jquery/dist/jquery.min.js",
-                            "node_modules/signalr/jquery.signalR.min.js"
-                        ]
+                        "tsConfig": "tsconfig.app.json",
+                        "project": "ng-package.json"
                     },
                     "configurations": {
                         "production": {}
