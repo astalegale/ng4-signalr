@@ -36,7 +36,7 @@
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "ng4s",
-            "styleext": "scss"
+            "style": "scss"
         },
         "@schematics/angular:directive": {
             "prefix": "ng4s"
