@@ -7,9 +7,9 @@
     "types": []
   },
   "angularCompilerOptions": {
+    "compilationMode": "partial",
     "preserveWhitespaces": false,
-    "debug": true,
-    "enableIvy": false
+    "debug": true
   },
   "files": [
     "index.ts"

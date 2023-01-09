@@ -1,3 +1,4 @@
+/.angular/cache
 $ cat .gitignore
 /node_modules
 /dist
