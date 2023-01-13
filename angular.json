@@ -32,7 +32,6 @@
             }
         }
     },
-    "defaultProject": "ng4-signalr",
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "ng4s",
